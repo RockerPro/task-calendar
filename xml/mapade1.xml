@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<data>
+	<event id='278'>
+		<start_date><![CDATA[2012-07-22 12:10:00]]></start_date>
+		<end_date><![CDATA[2012-07-22 12:15:00]]></end_date>
+		<text><![CDATA[Sudan]]></text>
+		<details><![CDATA[]]></details>
+		<event_location><![CDATA[Janub Kurdufan, Sudan]]></event_location>
+		<lat><![CDATA[11.199019]]></lat>
+		<lng><![CDATA[29.417933]]></lng>
+	</event>
+	<event id='285'>
+		<start_date><![CDATA[2012-09-11 02:40:00]]></start_date>
+		<end_date><![CDATA[2012-09-11 15:05:00]]></end_date>
+		<text><![CDATA[Australia]]></text>
+		<details><![CDATA[]]></details>
+		<event_location><![CDATA[Australia]]></event_location>
+		<lat><![CDATA[-25.274399]]></lat>
+		<lng><![CDATA[133.775131]]></lng>
+	</event>
+	<event id='286'>
+		<start_date><![CDATA[2012-09-15 03:00:00]]></start_date>
+		<end_date><![CDATA[2012-09-15 06:00:00]]></end_date>
+		<text><![CDATA[Argentina]]></text>
+		<details><![CDATA[]]></details>
+		<event_location><![CDATA[Argentina]]></event_location>
+		<lat><![CDATA[-38.416096]]></lat>
+		<lng><![CDATA[-63.616673]]></lng>
+	</event>
+	<event id='90'>
+		<start_date><![CDATA[2012-09-16 02:00:00]]></start_date>
+		<end_date><![CDATA[2012-09-16 4:30:00]]></end_date>
+		<text><![CDATA[Berlin]]></text>
+		<details><![CDATA[]]></details>
+		<event_location><![CDATA[Berlin]]></event_location>
+		<lat><![CDATA[52.523403]]></lat>
+		<lng><![CDATA[13.411400]]></lng>
+	</event>
+	<event id='268'>
+		<start_date><![CDATA[2012-09-07 11:35:00]]></start_date>
+		<end_date><![CDATA[2012-09-22 11:40:00]]></end_date>
+		<text><![CDATA[Brazil]]></text>
+		<details><![CDATA[]]></details>
+		<event_location><![CDATA[Brazil]]></event_location>
+		<lat><![CDATA[-14.235004]]></lat>
+		<lng><![CDATA[-51.925282]]></lng>
+	</event>
+</data>

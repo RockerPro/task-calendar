@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- Mirrored from dhtmlx.com/docs/products/dhtmlxScheduler/sample_map.shtml by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 26 May 2016 19:23:36 GMT -->
+<head>
+	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+	<title>Map View Demo - dhtmlxScheduler</title>
+	<meta name="description" content="This demo shows a JavaScript event calendar with Google Maps integration where you can show locations for each calendar event.">
+	<meta name="keywords" content="javascript, scheduler, event calendar, events calendar, event, calendar, ajax, google-like, google maps">
+
+</head>
+	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+	
+ 	<script src="codebase/dhtmlxscheduler8c94.js?v=4.1" type="text/javascript" charset="utf-8"></script>
+	<script src="codebase/ext/dhtmlxscheduler_map_view8c94.js?v=4.1" type="text/javascript" charset="utf-8"></script>
+	<link rel="stylesheet" href="codebase/dhtmlxscheduler_flat8c94.css?v=4.1" type="text/css" media="screen" title="no title" charset="utf-8">
+
+	
+<style type="text/css" media="screen">
+	html, body{
+		margin:0px;
+		padding:0px;
+		height:100%;
+		overflow:hidden;
+	}	
+</style>
+
+<script type="text/javascript" charset="utf-8">
+		function init() {
+			window.resizeTo(950,700)
+			modSchedHeight();
+		
+			scheduler.config.xml_date="%Y-%m-%d %H:%i";
+			scheduler.config.prevent_cache = true;
+			
+			scheduler.locale.labels.map_tab = "Map";
+			scheduler.locale.labels.section_location = "Location";
+			scheduler.config.multi_day = true;
+			scheduler.xy.map_date_width = 180; // date column width
+			scheduler.xy.map_description_width = 400; // description column width
+
+            // updating dates to display on before view change
+            scheduler.attachEvent("onBeforeViewChange", function(old_mode, old_date, new_mode, new_date) {
+                scheduler.config.map_start = scheduler.date.month_start(new Date((new_date||old_date).valueOf()));
+                scheduler.config.map_end = scheduler.date.add(scheduler.config.map_start, 1, "month");
+                return true;
+            });
+
+            // defining add function for prev/next arrows
+            scheduler.date.add_map = function(date, inc) {
+                return scheduler.date.add(date, inc, "month");
+            };
+
+            // defining date header 
+            var format = scheduler.date.date_to_str("%Y-%m-%d");
+            scheduler.templates.map_date = function(start, end, mode){
+                return format(start)+" — "+format(end);
+            };
+
+            // lightbox sections
+			scheduler.config.lightbox.sections=[	
+				{ name:"description", height:50, map_to:"text", type:"textarea", focus:true },
+				{ name:"location", height:43, map_to:"event_location", type:"textarea"  },
+				{ name:"time", height:72, type:"time", map_to:"auto"}	
+			];
+			
+			scheduler.config.map_inital_zoom = 8;
+
+			scheduler.init('scheduler_here',new Date(2012,8,11),"map");
+			scheduler.load("xml/mapade1.xml?v=35");
+		}	
+	</script>
+	
+</head>
+
+<body onload="init();" onresize="modSchedHeight()">
+	
+	
+	
+	
+	
+	<!-- info block 
+		href-prev
+		href-next
+		title
+		desc-short
+		desc-long
+-->
+    <style>
+        a img{
+            border: none;
+        }
+        li{
+            list-style: none;
+        }
+    </style>
+	<script>
+		function modSchedHeight(){
+			var headHeight = 100;
+			var sch = document.getElementById("scheduler_here");
+			sch.style.height = (parseInt(document.body.offsetHeight)-headHeight)+"px";
+			var contbox = document.getElementById("contbox");
+			contbox.style.width = (parseInt(document.body.offsetWidth)-300)+"px";
+		}
+	</script>
+	<div style="position: relative; height:95px;background-color:#3D3D3D;border-bottom:5px solid #828282;">
+		<a style="position: absolute; left: 25px; top: 22px; z-index: 10;" href="sample_timeline.html"><img src="images/btn-left.gif"></a>
+		<div id="contbox" style="position: relative; padding: 22px 25px 0 75px; font: normal 17px Arial, Helvetica; color:white;">
+			<div style="position: absolute; left: 75px; top: 22px; border-right:5px solid #2D8EB6;color:#2D8EB6;width:175px;height:50px;text-align:right;padding-right:25px;">Map View</div>
+			<div style="padding-left: 205px; min-width: 400px;">
+                <div style="font-size:12px;padding-left:20px;">With Google Maps integration, you can show locations for each calendar event. Click on the event to see its location on the map.</div>
+    			<div style="font-size:12px;padding-left:20px;margin-top:5px;color:#949292;">You can add/edit/delete events, but changes will be available only until the demo is reloaded.</div>
+            </div>
+		</div>
+		<a style="position: absolute; right: 25px; top: 22px;" href="sample_basic.html"><img src="images/btn-right.gif"></a>
+	</div>
+	<!-- end. info block -->
+    <ul>
+        <li>
+            <a></a>
+            <span></span>
+        </li>
+    </ul>
+	<div id="scheduler_here" class="dhx_cal_container" style='width:100%; height:100%;'>
+		<div class="dhx_cal_navline">
+			<div class="dhx_cal_prev_button">&nbsp;</div>
+			<div class="dhx_cal_next_button">&nbsp;</div>
+			<div class="dhx_cal_today_button"></div>
+			<div class="dhx_cal_date"></div>
+			<div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+			<div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+			<div class="dhx_cal_tab" name="map_tab" style="right:280px;"></div>
+			<div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+		</div>
+		<div class="dhx_cal_header">
+		</div>
+		<div class="dhx_cal_data">
+		</div>		
+	</div>
+</body>

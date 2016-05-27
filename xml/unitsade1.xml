@@ -1,0 +1,45 @@
+<data>
+	<event id="2">
+		<start_date><![CDATA[2012-06-20 12:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-20 14:00:00]]></end_date>
+		<text><![CDATA[Task A (JS)]]></text>
+		<section_id>1</section_id>
+	</event>
+	<event id="3">
+		<start_date><![CDATA[2012-06-20 10:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-20 12:00:00]]></end_date>
+		<text><![CDATA[Task B (JW)]]></text>
+		<section_id>2</section_id>
+	</event>
+	<event id="4">
+		<start_date><![CDATA[2012-06-20 16:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-20 18:00:00]]></end_date>
+		<text><![CDATA[Task C (DM)]]></text>
+		<custom>1</custom>
+		<section_id>3</section_id>
+	</event>
+	<event id="5">
+		<start_date><![CDATA[2012-06-20 10:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-20 15:00:00]]></end_date>
+		<text><![CDATA[Task D (LB)]]></text>
+		<section_id>4</section_id>
+	</event>
+	<event id="6">
+		<start_date><![CDATA[2012-06-19 12:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-19 14:00:00]]></end_date>
+		<text><![CDATA[day before test]]></text>
+		<section_id>1</section_id>
+	</event>
+	<event id="7">
+		<start_date><![CDATA[2012-06-21 12:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-21 14:00:00]]></end_date>
+		<text><![CDATA[day after test]]></text>
+		<section_id>1</section_id>
+	</event>
+	<event id="7">
+		<start_date><![CDATA[2012-06-14 12:00:00]]></start_date>
+		<end_date><![CDATA[2012-06-26 14:00:00]]></end_date>
+		<text><![CDATA[multi-day event]]></text>
+		<section_id>2</section_id>
+	</event>	
+</data>
