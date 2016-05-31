@@ -3,26 +3,6 @@ var base_url=location.protocol+'//'+location.hostname+(location.port ? ':'+locat
 var app = angular.module('app', []);
     app.controller('CalendarController', function($scope, $http)
     {
-        //  moment().format();
-
-          
-        //   var date = moment();
-          
-        //   var  begin2= moment(date).endOf('day');
-        //   if(parseInt(begin2.format('D')) == 1){
-        //     var  begin = moment(date).endOf('week').isoWeekday(1);
-        //     var pos = (parseInt(begin2.format('D')) - parseInt(begin.format('D')))-5;
-        // }else if(parseInt(begin2.format('D')) > 1 && parseInt(begin2.format('D')) < 9){
-        //     var  begin = moment(date).startOf('week').isoWeekday(1);
-        //     var pos = (parseInt(begin.format('D')) - parseInt(begin2.format('D')));
-        // }
-        // else if(parseInt(begin2.format('D')) > 8 && parseInt(begin2.format('D')) < 15){
-        //     var  begin = moment(date).endOf('week').isoWeekday(1);
-        //     var pos = (parseInt(begin.format('D')) - parseInt(begin2.format('D')));
-        // }
-        //   console.log(parseInt(begin.format('D')));
-        //   console.log(parseInt(begin2.format('D')));
-        //   console.log(pos);
            
         $scope.modSchedHeight = function (){
             var headHeight = 100;
@@ -35,18 +15,19 @@ var app = angular.module('app', []);
             scheduler.locale.labels.timeline_tab = "Timeline";
             scheduler.locale.labels.section_custom = "Section";
             scheduler.locale.labels.section_important = "Important";
-            scheduler.config.fix_tab_position = false;
+            // scheduler.config.fix_tab_position = false;
             scheduler.config.details_on_create=true;
             scheduler.config.details_on_dblclick=true;
             scheduler.config.xml_date="%Y-%m-%d";
 
+
             //===============
             //Configuration
             //===============
-            scheduler.templates.event_class = function(start, end, event) {
-                event.color = (event.important) ? "red" : "";
-                return "";
-            };
+            // scheduler.templates.event_class = function(start, end, event) {
+            //     event.color = (event.important) ? "red" : "";
+            //     return "";
+            // };
 
             var sections = [
                 {key: 1, label: "James Smith"},
@@ -55,45 +36,8 @@ var app = angular.module('app', []);
                 {key: 4, label: "Linda Brown"}
             ];
 
-            var basicSort = function(a, b) {
-                if (+a.start_date == +b.start_date) {
-                    return a.id > b.id ? 1 : -1;
-                }
-                return a.start_date > b.start_date ? 1 : -1;
-            };
-            var prioritySort = function(a, b) {
-                // here we can define sorting logic, what event should be displayed at the top
-                if (a.important && !b.important) {
-                    // display a before b
-                    return -1;
-                } else {
-                    if (!a.important && b.important) {
-                        // display a after b
-                        return 1;
-                    } else {
-                        return basicSort(a, b);
-                    }
-                }
-            };
-
-            // this function is not universal and should be changed depending on your timeline configuration
-            // var timeframeSort = function(a, b) {
-            //     a_timeframe_start = scheduler.date.date_part(new Date(a.start_date));
-            //     a_timeframe_end = scheduler.date.date_part(new Date(a.end_date));
-            //     if (+a.end_date != +a_timeframe_end) {
-            //         a_timeframe_end = scheduler.date.add(a_timeframe_end, 1, "day");
-            //     }
-
-            //     b_timeframe_start = scheduler.date.date_part(new Date(b.start_date));
-
-            //     if (a_timeframe_start < b.end_date && a_timeframe_end > b.start_date && +a_timeframe_start == +b_timeframe_start) {
-            //         return prioritySort(a, b);
-            //     } else {
-            //         return (a_timeframe_start < b_timeframe_start) ? -1 : 1;
-            //     }
-            // };
-
-
+          
+             
             scheduler.createTimelineView({
                 name:   "timeline",
                 x_unit: "day",
@@ -104,7 +48,8 @@ var app = angular.module('app', []);
                 x_length: 7,
                 y_unit: sections,
                 y_property: "section_id",
-                render:"bar"
+                render:"bar",
+                round_position: true
             });
             // Working week
             scheduler.date.timeline_start = scheduler.date.week_start;
@@ -122,25 +67,72 @@ var app = angular.module('app', []);
         ]
 
             scheduler.init('scheduler_here', new Date(), "timeline");
+            
+            var block_id = null; 
+        var startDate = new Date(); 
+        scheduler.attachEvent("onBeforeViewChange", function(old_mode,old_date,mode,date){
+            if(block_id)
+            scheduler.deleteMarkedTimespan(block_id);   
+            var from = scheduler.date[mode + "_start"](new Date(date));
+            var to = new Date(Math.min(new Date(startDate), + scheduler.date.add(from, 0, mode)));
+            // scheduler.config.drag_move = false;
+            block_id = scheduler.addMarkedTimespan({
+              start_date: from, 
+              end_date:to,
+              type:"dhx_time_block"
+            });
+              
+            return true;
+        });
+        startDate.setDate(startDate.getDate()-1); 
+        
+        scheduler.config.limit_start = new Date(startDate);
+        scheduler.config.limit_end = new Date(9999, 1,1);
+        setInterval(function(){     
+           scheduler.config.limit_start = new Date(startDate);
+        }, 1000*60);
+
+       
             scheduler.parse([
-               { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task A-12458", section_id:1},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task A-89411", section_id:1},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task A-64168", section_id:1},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task A-46598", section_id:1},
-            { start_date: "2016-05-27", end_date: "2016-05-28", text:"tarea xddd", section_id:1},
+               { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol", text:"Task A-12458", section_id:1},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol2", text:"Task A-89411", section_id:1},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol3", text:"Task A-64168", section_id:1},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol4", text:"Task A-46598", section_id:1},
+            { start_date: "2016-05-27", end_date: "2016-05-28", ruta: "lol5", text:"tarea xddd", section_id:1},
             
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task B-48865", section_id:2},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task B-44864", section_id:2},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task B-46558", section_id:2},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task B-45564", section_id:2},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol6", text:"Task B-48865", section_id:2},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol7", text:"Task B-44864", section_id:2},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol8", text:"Task B-46558", section_id:2},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol9", text:"Task B-45564", section_id:2},
             
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task C-32421", section_id:3},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task C-14244", section_id:3},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol10", text:"Task C-32421", section_id:3},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol11", text:"Task C-14244", section_id:3},
             
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task D-52688", section_id:4},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task D-46588", section_id:4},
-            { start_date: "2016-05-26", end_date: "2016-05-26", text:"Task D-12458", section_id:4}
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol12", text:"Task D-52688", section_id:4},
+            { start_date: "2016-05-26", end_date: "2016-05-26", ruta: "lol13", text:"Task D-46588", section_id:4},
+            { start_date: "2016-05-31", end_date: "2016-05-31", ruta: "lol14", text:"lool", section_id:4}
             ], "json");
+
+ 
+         var html = function(id) { return document.getElementById(id); }; //just a helper
+        scheduler.attachEvent("onDblClick", function (id, e){
+               var ev = scheduler.getEvent(id);
+               var star_date_ev = ev.start_date;
+               var today = new Date();
+               var today_f = today.toISOString().substring(0, 10);
+               var start_date_f = star_date_ev.toISOString().substring(0, 10);
+               if(start_date_f < today_f){
+                    scheduler.startLightbox(id, html("my_form"));
+                    html("task").innerHTML  = ev.text;
+                    html("ruta").innerHTML  = ev.ruta;    
+                    html("fecha").innerHTML  = start_date_f;       
+               }
+               return true;               
+          });
+        
+        $scope.close_form = function () {
+            scheduler.endLightbox(false, html("my_form"));
+        }
     }
     $scope.init();
     });

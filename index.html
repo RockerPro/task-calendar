@@ -11,9 +11,10 @@
 	<script src="bower_components/moment/moment.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
 	<script src="controller.js"></script>
-	<script src='codebase/dhtmlxscheduler8c94.js?v=4.1' type="text/javascript" charset="utf-8"></script>
+	<script src='codebase/dhtmlxscheduler.js' type="text/javascript" charset="utf-8"></script>
 	<script src='codebase/ext/dhtmlxscheduler_timeline8c94.js?v=4.1' type="text/javascript" charset="utf-8"></script>
-	
+	<script src='codebase/ext/dhtmlxscheduler_limit.js' type="text/javascript" charset="utf-8"></script>
+	<script src='codebase/ext/dhtmlxscheduler_serialize.js' type="text/javascript" charset="utf-8"></script>
 	
 	<link rel='STYLESHEET' type='text/css' href='codebase/dhtmlxscheduler_flat.css'>
 	
@@ -32,6 +33,32 @@
 		padding-top:5px; padding-left:5px;
 		text-align:left !important;
 	}
+	#my_form {
+			position: absolute;
+			width: 40%;
+			height: 250px;
+			top: 100px;
+			left: 200px;
+			z-index: 10001;
+			display: none;
+			background-color: white;
+			border: 2px outset gray;
+			padding: 40px;
+			font-family: Tahoma;
+			font-size: 10pt;
+		}
+
+		#my_form label {
+			width: 200px;
+		}
+		.close{
+			width: 34px;
+		    position: relative;
+		    float: right !important;
+		    top: -35px;
+    		right: -35px;
+    		cursor: pointer;
+		}
 </style>
 
 <script type="text/javascript" charset="utf-8">
@@ -55,6 +82,16 @@
 		</div>
 		<div class="dhx_cal_data">
 		</div>		
+	</div>
+	<div id="my_form">
+		<img class="close" src="images/close.png"ng-click="close_form()"/>
+		<div class="cont">
+		Tarea:<label id="task"></label><br>
+		Ruta: <label id="ruta"></label><br>
+		Fecha: <label id="fecha"></label><br>
+		</div>
+		
+		
 	</div>
 	</div>
 </body>
